@@ -1,0 +1,38 @@
+#include <iostream>
+#include <map>
+#include <string>
+
+using namespace std;
+
+class GoogleAuth {
+private:
+    map<string, string> userDatabase; // email -> password
+
+public:
+    bool createGoogleAccount(string email, string password) {
+        if (userDatabase.find(email) != userDatabase.end()) {
+            cout << "Account already exists!" << endl;
+            return false;
+        }
+        userDatabase[email] = password;
+        cout << "Google Account created successfully for: " << email << endl;
+        return true;
+    }
+
+    bool signInWithGoogle(string email, string password) {
+        if (userDatabase.find(email) != userDatabase.end() && userDatabase[email] == password) {
+            cout << "Access Granted! Welcome to your Google Account." << endl;
+            return true;
+        }
+        cout << "Access Denied! Invalid credentials." << endl;
+        return false;
+    }
+};
+
+int main() {
+    GoogleAuth authSystem;
+    authSystem.createGoogleAccount("dev.user@gmail.com", "securePass2026");
+    cout << "\n--- Trying to Login ---" << endl;
+    authSystem.signInWithGoogle("dev.user@gmail.com", "securePass2026");
+    return 0;
+}
